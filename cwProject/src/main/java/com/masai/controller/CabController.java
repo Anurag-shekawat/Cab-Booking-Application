@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.exception.CabException;
@@ -20,24 +21,25 @@ import com.masai.module.Cab;
 import com.masai.service.CabService;
 
 @RestController
+@RequestMapping("cab")
 public class CabController {
 
 	@Autowired
 	private CabService cService;
 	
-	@PostMapping("/insertcab")
+	@PostMapping("/create")
 	public ResponseEntity<Cab> insertCabHandler(@Valid @RequestBody Cab cab) throws CabException {
 		Cab caby = cService.insertCab(cab);
 		return new ResponseEntity<Cab>(caby,HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/updaterate/{cabId}/{rate}")
+	@PutMapping("/updateRateOfCab/{cabId}/{rate}")
 	public ResponseEntity<Cab> updateCabRatePerKmHandler(@PathVariable Integer cabId,@PathVariable Float rate) throws CabException {
 		Cab cab = cService.updateCabRatePerKm(cabId, rate);
 		return new ResponseEntity<Cab>(cab,HttpStatus.ACCEPTED);
 	}
 	
-	@DeleteMapping("/deletecab/{cabId}")
+	@DeleteMapping("/delete/{cabId}")
 	public ResponseEntity<Cab> deleteCabHandler(@PathVariable Integer cabId) throws CabException{
 		Cab cab = cService.deleteCab(cabId);
 		return new ResponseEntity<Cab>(cab,HttpStatus.OK);
@@ -49,7 +51,7 @@ public class CabController {
 		return new ResponseEntity<List<Cab>>(cabList,HttpStatus.ACCEPTED);
 	}
 	
-	@GetMapping("/countCab/{carType}")
+	@GetMapping("/countCabs/{carType}")
 	public ResponseEntity<Integer> getCountByCarTypeHandler(@PathVariable String carType) throws CabException{
 		Integer count = cService.countCabsOfTypes(carType);
 		return new ResponseEntity<Integer>(count,HttpStatus.ACCEPTED);

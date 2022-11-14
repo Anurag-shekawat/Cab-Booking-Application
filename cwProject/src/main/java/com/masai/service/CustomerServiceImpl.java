@@ -1,5 +1,8 @@
 package com.masai.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +32,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer updateCusomer(Customer customer, String key) throws CustomerException {
+	public Customer updateCustomer(Customer customer, String key) throws CustomerException {
 		CurrentUserSession loggedInUser = sDao.findByUuid(key);
 		if(loggedInUser==null) {
 			throw new CustomerException("Please provide a valid key to update the customer...");
@@ -40,6 +43,41 @@ public class CustomerServiceImpl implements CustomerService {
 			return cDao.save(customer);
 		}else {
 			throw new CustomerException("Invalid customer details, please login first");
+		}
+	}
+
+	@Override
+	public Customer deleteCustomer(Integer customerId) throws CustomerException {
+		Optional<Customer> customer = cDao.findById(customerId);
+		if(customer.isPresent()) {
+			cDao.delete(customer.get());
+			Optional<CurrentUserSession> cus = sDao.findById(customerId);
+			if(cus.isPresent()) {
+				sDao.delete(cus.get());
+			}
+			return customer.get();
+		}else {
+			throw new CustomerException("No customer exist with customer id: "+customerId);
+		}
+	}
+
+	@Override
+	public List<Customer> viewCustomers() throws CustomerException {
+		List<Customer> customers = cDao.findAll();
+		if(customers.size()==0) {
+			throw new CustomerException("Currently there are no customers in the databse");
+		}else {
+			return customers;
+		}
+	}
+
+	@Override
+	public Customer viewCustomer(Integer customerId) throws CustomerException {
+		Optional<Customer> customer	= cDao.findById(customerId);
+		if(customer.isPresent()) {
+			return customer.get();
+		}else {
+			throw new CustomerException("No customer exist with customer id: "+customerId);
 		}
 	}
 
