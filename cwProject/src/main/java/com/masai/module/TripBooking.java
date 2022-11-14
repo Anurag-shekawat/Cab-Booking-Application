@@ -27,9 +27,9 @@ public class TripBooking {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer tripBookingId;
 
-//	@ManyToOne(fetch = FetchType.EAGER)
-//	@JoinColumn(name = "customerId") // renaming column name to customerId
-//	private Customer customer;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "customerId") // renaming column name to customerId
+	private Customer customer;
 
 	@ManyToOne
 	@JoinColumn(name = "cabDriverId")

@@ -27,7 +27,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class CabDriver {
+public class CabDriver extends User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

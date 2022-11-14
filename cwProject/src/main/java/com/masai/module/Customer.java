@@ -31,8 +31,8 @@ public class Customer extends User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer customerId;
 	
-//	@OneToMany(cascade = CascadeType.ALL,mappedBy = "customer",orphanRemoval = true)
-//	@JsonIgnore
-//	List<TripBooking> tripDetailsList = new ArrayList<>();
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "customer",orphanRemoval = true)
+	@JsonIgnore
+	List<TripBooking> tripDetailsList = new ArrayList<>();
 	
 }

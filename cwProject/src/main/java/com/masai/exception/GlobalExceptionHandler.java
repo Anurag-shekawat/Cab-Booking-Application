@@ -38,6 +38,18 @@ public class GlobalExceptionHandler {
 
 	}
 	
+	@ExceptionHandler(DriverException.class)
+	public ResponseEntity<MyErrorDetails> DriverExceptionHandler(DriverException de, WebRequest re) {
+
+		MyErrorDetails med = new MyErrorDetails();
+		med.setTimestamp(LocalDateTime.now());
+		med.setMessage(de.getMessage());
+		med.setDescription(re.getDescription(false));
+
+		return new ResponseEntity<MyErrorDetails>(med, HttpStatus.BAD_REQUEST);
+
+	}
+	
 	@ExceptionHandler(TripBookingException.class)
 	public ResponseEntity<MyErrorDetails> TripBookingExceptionHandler(TripBookingException te, WebRequest re) {
 
