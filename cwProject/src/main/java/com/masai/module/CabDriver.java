@@ -39,7 +39,7 @@ public class CabDriver extends User {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "cabId")
-	@JsonIgnore
+//	@JsonIgnore
 	private Cab cab;
 
 	@NotNull(message = "Rating cannot be null")

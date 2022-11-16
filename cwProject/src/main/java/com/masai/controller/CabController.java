@@ -27,11 +27,11 @@ public class CabController {
 	@Autowired
 	private CabService cService;
 	
-	@PostMapping("/create")
-	public ResponseEntity<Cab> insertCabHandler(@Valid @RequestBody Cab cab) throws CabException {
-		Cab caby = cService.insertCab(cab);
-		return new ResponseEntity<Cab>(caby,HttpStatus.CREATED);
-	}
+//	@PostMapping("/create")
+//	public ResponseEntity<Cab> insertCabHandler(@Valid @RequestBody Cab cab) throws CabException {
+//		Cab caby = cService.insertCab(cab);
+//		return new ResponseEntity<Cab>(caby,HttpStatus.CREATED);
+//	}
 	
 	@PutMapping("/updateRateOfCab/{cabId}/{rate}")
 	public ResponseEntity<Cab> updateCabRatePerKmHandler(@PathVariable Integer cabId,@PathVariable Float rate) throws CabException {

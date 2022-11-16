@@ -26,7 +26,7 @@ import com.masai.service.LoginService;
 
 @RestController
 @RequestMapping("customers")
-public class CustomeController {
+public class CustomerController {
 
 	@Autowired
 	private LoginService logService;
@@ -49,22 +49,22 @@ public class CustomeController {
 	}
 
 	@DeleteMapping("/delete/{cId}")
-	public ResponseEntity<Customer> deleteCustomerhandler(@PathVariable("cId") Integer customerId)
-			throws CustomerException {
-		Customer deletedCustomer = cService.deleteCustomer(customerId);
+	public ResponseEntity<Customer> deleteCustomerhandler(@PathVariable("cId") Integer customerId,
+			@RequestParam("key") String key) throws CustomerException {
+		Customer deletedCustomer = cService.deleteCustomer(customerId, key);
 		return new ResponseEntity<Customer>(deletedCustomer, HttpStatus.ACCEPTED);
 	}
 
 	@GetMapping("/getAll")
-	public ResponseEntity<List<Customer>> getAllCustomerHandler() throws CustomerException {
-		List<Customer> customers = cService.viewCustomers();
+	public ResponseEntity<List<Customer>> getAllCustomerHandler(@RequestParam("key") String key) throws CustomerException {
+		List<Customer> customers = cService.viewCustomers(key);
 		return new ResponseEntity<List<Customer>>(customers, HttpStatus.ACCEPTED);
 	}
 
 	@GetMapping("/getCustomer/{cId}")
-	public ResponseEntity<Customer> getCustomerByCIdHandler(@PathVariable("cId") Integer customerId)
+	public ResponseEntity<Customer> getCustomerByCIdHandler(@PathVariable("cId") Integer customerId,@RequestParam("key") String key)
 			throws CustomerException {
-		Customer customer = cService.viewCustomer(customerId);
+		Customer customer = cService.viewCustomer(customerId,key);
 		return new ResponseEntity<Customer>(customer, HttpStatus.ACCEPTED);
 	}
 
