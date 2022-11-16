@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.masai.exception.DriverException;
+import com.masai.module.Cab;
 import com.masai.module.CabDriver;
 import com.masai.module.CurrentUserSession;
+import com.masai.module.DriverDto;
 import com.masai.repository.DriverRepo;
 import com.masai.repository.SessionDAO;
 
@@ -35,16 +37,27 @@ public class DriverServiceImpl implements DriverService {
 	}
 
 	@Override
-	public CabDriver updateDriver(CabDriver driver, String key) throws DriverException {
+	public CabDriver updateDriver(DriverDto driver, String key) throws DriverException {
 		CurrentUserSession loggedInDriver = sDao.findByUuid(key);
 		if (loggedInDriver == null) {
 			throw new DriverException("Please enter a valid key");
 		}
 
 		if (driver.getDriverId() == loggedInDriver.getUserId()) {
-			driver.setCab(driver.getCab());
-			driver.getCab().setCabDriver(driver);
-			return dDao.save(driver);
+			CabDriver d = dDao.findById(driver.getDriverId()).get();
+			Cab cb = d.getCab();
+			d.setMobile(driver.getMobile());
+			d.setUsername(driver.getUsername());
+			d.setPassword(driver.getPassword());
+			d.setAddress(driver.getAddress());
+			d.setEmail(driver.getEmail());
+			cb.setCarType(driver.getCarType());
+			cb.setNumberPlate(driver.getNumberPlate());
+			cb.setRatePerKms(driver.getRatePerKms());
+
+			dDao.save(d);
+
+			return d;
 		} else {
 			throw new DriverException("Invalid driver details");
 		}
@@ -91,8 +104,8 @@ public class DriverServiceImpl implements DriverService {
 				throw new DriverException("No driver found with rating greater than or equal to 4.5");
 			}
 			return bestDrivers;
-		}else {
-			throw new DriverException("Invalid driver details"); 
+		} else {
+			throw new DriverException("Invalid driver details");
 		}
 	}
 

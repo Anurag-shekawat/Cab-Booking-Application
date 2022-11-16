@@ -1,0 +1,36 @@
+login:-
+{
+  "mobileNo": "8384089489",
+  "password": "1234",
+  "role": "customer"
+}
+
+Create Customer:-
+{
+  "address": "Delhi",
+  "email": "ram@gmail.com",
+  "mobile": "8384089489",
+  "password": "12345",
+  "username": "Ram"
+}
+
+create Driver and car:-
+{
+  "username": "Ram Singh",
+  "address": "Bhiaslana",
+  "mobile": "9891292306",
+  "email": "ramsingh@gmail.com",
+  "driverId": 8,
+  "licenseNumber": "licence1",
+  "cab": {
+    "cabId": 9,
+    "numberPlate": "RJ26RS0001",
+    "carType": "Tractor",
+    "ratePerKms": 25.2
+  },
+  "rating": 4.5,
+  "password": "12345"
+}
+
+
+

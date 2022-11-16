@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.masai.exception.DriverException;
 import com.masai.exception.LoginException;
 import com.masai.module.CabDriver;
+import com.masai.module.DriverDto;
 import com.masai.module.LoginDTO;
 import com.masai.service.DriverService;
 import com.masai.service.LoginService;
@@ -41,7 +42,7 @@ public class DriverController {
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<CabDriver> updateDriverHandler(@Valid @RequestBody CabDriver driver,
+	public ResponseEntity<CabDriver> updateDriverHandler(@Valid @RequestBody DriverDto driver,
 			@RequestParam("key") String key) throws DriverException {
 		CabDriver cabDriver = dService.updateDriver(driver, key);
 		return new ResponseEntity<CabDriver>(cabDriver, HttpStatus.ACCEPTED);
