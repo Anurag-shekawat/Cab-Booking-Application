@@ -74,6 +74,18 @@ public class GlobalExceptionHandler {
 
 	}
 	
+	@ExceptionHandler(AdminException.class)
+	public ResponseEntity<MyErrorDetails> AdminExceptionHandler(AdminException ae, WebRequest re) {
+
+		MyErrorDetails med = new MyErrorDetails();
+		med.setTimestamp(LocalDateTime.now());
+		med.setMessage(ae.getMessage());
+		med.setDescription(re.getDescription(false));
+
+		return new ResponseEntity<MyErrorDetails>(med, HttpStatus.BAD_REQUEST);
+
+	}
+	
 	@ExceptionHandler(LoginException.class)
 	public ResponseEntity<MyErrorDetails> LoginExceptionHandler(LoginException le, WebRequest re) {
 

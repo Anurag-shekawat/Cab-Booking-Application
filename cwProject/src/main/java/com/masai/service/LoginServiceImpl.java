@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.masai.exception.LoginException;
+import com.masai.module.Admin;
 import com.masai.module.CabDriver;
 import com.masai.module.CurrentUserSession;
 import com.masai.module.Customer;
 import com.masai.module.LoginDTO;
+import com.masai.repository.AdminRepo;
 import com.masai.repository.CustomerDAO;
 import com.masai.repository.DriverRepo;
 import com.masai.repository.SessionDAO;
@@ -25,6 +27,9 @@ public class LoginServiceImpl implements LoginService {
 
 	@Autowired
 	private DriverRepo driverDao;
+	
+	@Autowired
+	private AdminRepo adminDao;
 
 	@Autowired
 	private SessionDAO sDao;
@@ -68,6 +73,26 @@ public class LoginServiceImpl implements LoginService {
 			if(existingDriver.getPassword().equals(dto.getPassword())) {
 				String key = RandomString.make(6);
 				CurrentUserSession currentUserSession = new CurrentUserSession(existingDriver.getDriverId(),key,LocalDateTime.now());
+				sDao.save(currentUserSession);
+				return currentUserSession.toString();
+			}else {
+				throw new LoginException("Please enter a valid password");
+			}
+		}else if(dto.getRole().equalsIgnoreCase("admin")) {
+			Admin existingAdmin = adminDao.findByMobile(dto.getMobileNo());
+			if(existingAdmin==null) {
+				throw new LoginException("Please enter a valid mobile number...");
+			}
+			
+			Optional<CurrentUserSession> validAdminSessionOpt = sDao.findById(existingAdmin.getAdminId());
+			
+			if(validAdminSessionOpt.isPresent()) {
+				throw new LoginException("User already loged in");
+			}
+			
+			if(existingAdmin.getPassword().equals(dto.getPassword())) {
+				String key = RandomString.make(6);
+				CurrentUserSession currentUserSession = new CurrentUserSession(existingAdmin.getAdminId(),key,LocalDateTime.now());
 				sDao.save(currentUserSession);
 				return currentUserSession.toString();
 			}else {

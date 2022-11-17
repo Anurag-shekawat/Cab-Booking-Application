@@ -5,6 +5,15 @@ login:-
   "role": "customer"
 }
 
+create admin:-
+{
+  "address": "Delhi",
+  "email": "ratan@gmail.com",
+  "mobile": "9123456789",
+  "password": "12345",
+  "username": "Anurag"
+}
+
 Create Customer:-
 {
   "address": "Delhi",
