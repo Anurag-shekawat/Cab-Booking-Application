@@ -50,6 +50,6 @@ public class CabDriver extends User {
 	@JsonIgnore
 	List<TripBooking> tripDetailsList = new ArrayList<>();
 
-//	private Boolean availablity = true;
+	private Boolean availablity = true;
 
 }

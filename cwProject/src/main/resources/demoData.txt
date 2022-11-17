@@ -23,16 +23,14 @@ Create Customer:-
   "username": "Ram"
 }
 
-create Driver and car:-
+create Driver:-
 {
   "username": "Ram Singh",
   "address": "Bhiaslana",
   "mobile": "9891292306",
   "email": "ramsingh@gmail.com",
-  "driverId": 8,
   "licenseNumber": "licence1",
   "cab": {
-    "cabId": 9,
     "numberPlate": "RJ26RS0001",
     "carType": "Tractor",
     "ratePerKms": 25.2

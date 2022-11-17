@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.masai.exception.CustomerException;
+import com.masai.module.CabDriver;
 import com.masai.module.CurrentUserSession;
 import com.masai.module.Customer;
+import com.masai.module.TripBooking;
 import com.masai.repository.CustomerDAO;
+import com.masai.repository.DriverRepo;
 import com.masai.repository.SessionDAO;
 
 @Service
@@ -20,6 +23,9 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	private SessionDAO sDao;
+
+	@Autowired
+	private DriverRepo dRepo;
 
 	@Override
 	public Customer createCustomer(Customer customer) throws CustomerException {
@@ -54,15 +60,27 @@ public class CustomerServiceImpl implements CustomerService {
 			throw new CustomerException("please enter a valid key");
 		}
 
-		if (customerId==loggedInUser.getUserId()) {
+		if (customerId == loggedInUser.getUserId()) {
 			Optional<Customer> customer = cDao.findById(customerId);
 			if (customer.isPresent()) {
+
+				List<TripBooking> tripDetailsList = customer.get().getTripDetailsList();
+				if (tripDetailsList.size() > 0) {
+					if (tripDetailsList.get(tripDetailsList.size() - 1).getStatus() == false) {
+						CabDriver driver = tripDetailsList.get(tripDetailsList.size() - 1).getCabDriver();
+						driver.setAvailablity(true);
+						dRepo.save(driver);
+						tripDetailsList.remove(tripDetailsList.size() - 1);
+						cDao.save(customer.get());
+					}
+				}
+
 				cDao.delete(customer.get());
 				return customer.get();
 			} else {
 				throw new CustomerException("No customer exist with customer id: " + customerId);
 			}
-		}else {
+		} else {
 			throw new CustomerException("Invalid customer details");
 		}
 
@@ -74,7 +92,7 @@ public class CustomerServiceImpl implements CustomerService {
 		if (loggedInUser == null) {
 			throw new CustomerException("please enter a valid key");
 		}
-			
+
 		List<Customer> customers = cDao.findAll();
 		if (customers.size() == 0) {
 			throw new CustomerException("Currently there are no customers in the databse");
@@ -84,22 +102,22 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer viewCustomer(Integer customerId,String key) throws CustomerException {
+	public Customer viewCustomer(Integer customerId, String key) throws CustomerException {
 		CurrentUserSession loggedInUser = sDao.findByUuid(key);
 		if (loggedInUser == null) {
 			throw new CustomerException("please enter a valid key");
 		}
-		if(loggedInUser.getUserId()==customerId) {
+		if (loggedInUser.getUserId() == customerId) {
 			Optional<Customer> customer = cDao.findById(customerId);
 			if (customer.isPresent()) {
 				return customer.get();
 			} else {
 				throw new CustomerException("No customer exist with customer id: " + customerId);
 			}
-		}else {
+		} else {
 			throw new CustomerException("Invalid customer details");
 		}
-		
+
 	}
 
 }

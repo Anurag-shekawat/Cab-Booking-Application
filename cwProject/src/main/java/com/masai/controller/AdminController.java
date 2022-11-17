@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.exception.AdminException;
-import com.masai.exception.CustomerException;
 import com.masai.exception.LoginException;
 import com.masai.module.Admin;
-import com.masai.module.Customer;
 import com.masai.module.LoginDTO;
 import com.masai.service.AdminService;
 import com.masai.service.LoginService;
@@ -45,7 +43,7 @@ public class AdminController {
 	public ResponseEntity<Admin> updateAdminHandler(@Valid @RequestBody Admin admin,
 			@RequestParam("key") String key) throws AdminException {
 		Admin udpatedAdmin = aService.updateAdmin(admin, key);
-		return new ResponseEntity<Admin>(admin, HttpStatus.ACCEPTED);
+		return new ResponseEntity<Admin>(udpatedAdmin, HttpStatus.ACCEPTED);
 	}
 
 	@DeleteMapping("/delete/{aId}")
