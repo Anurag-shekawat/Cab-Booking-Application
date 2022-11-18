@@ -19,10 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.exception.CustomerException;
 import com.masai.exception.LoginException;
+import com.masai.exception.TripBookingException;
 import com.masai.module.Customer;
 import com.masai.module.LoginDTO;
+import com.masai.module.TripBooking;
+import com.masai.module.TripBookingDTO;
 import com.masai.service.CustomerService;
 import com.masai.service.LoginService;
+import com.masai.service.TripBookingService;
 
 @RestController
 @RequestMapping("/customers")
@@ -33,6 +37,9 @@ public class CustomerController {
 
 	@Autowired
 	private CustomerService cService;
+
+	@Autowired
+	private TripBookingService tripBookingService;
 
 	@PostMapping("/create")
 	public ResponseEntity<Customer> createCustomerHandler(@Valid @RequestBody Customer customer)
@@ -56,16 +63,51 @@ public class CustomerController {
 	}
 
 	@GetMapping("/getAll")
-	public ResponseEntity<List<Customer>> getAllCustomerHandler(@RequestParam("key") String key) throws CustomerException {
+	public ResponseEntity<List<Customer>> getAllCustomerHandler(@RequestParam("key") String key)
+			throws CustomerException {
 		List<Customer> customers = cService.viewCustomers(key);
 		return new ResponseEntity<List<Customer>>(customers, HttpStatus.ACCEPTED);
 	}
 
 	@GetMapping("/getCustomer/{cId}")
-	public ResponseEntity<Customer> getCustomerByCIdHandler(@PathVariable("cId") Integer customerId,@RequestParam("key") String key)
-			throws CustomerException {
-		Customer customer = cService.viewCustomer(customerId,key);
+	public ResponseEntity<Customer> getCustomerByCIdHandler(@PathVariable("cId") Integer customerId,
+			@RequestParam("key") String key) throws CustomerException {
+		Customer customer = cService.viewCustomer(customerId, key);
 		return new ResponseEntity<Customer>(customer, HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/createTrip/{key}")
+	public ResponseEntity<TripBooking> registerTripBooking(@RequestBody TripBookingDTO tripBooking,
+			@PathVariable("key") String key) throws TripBookingException {
+
+		TripBooking savedBooking = tripBookingService.insertTripBooking(tripBooking, key);
+		return new ResponseEntity<TripBooking>(savedBooking, HttpStatus.OK);
+
+	}
+
+	@DeleteMapping("/canceltrip/{customerId}/{key}")
+	public ResponseEntity<String> deleteTripBooking(@PathVariable Integer customerId, @PathVariable String key)
+			throws TripBookingException {
+
+		String deleteBooking = tripBookingService.deleteTripBooking(customerId, key);
+		return new ResponseEntity<String>(deleteBooking, HttpStatus.OK);
+
+	}
+
+	@GetMapping("/getAllTrip/{customerid}/{key}")
+	public ResponseEntity<List<TripBooking>> allTripBookingByCustomerId(@PathVariable("customerid") Integer customerId,
+			@PathVariable("key") String key) throws TripBookingException {
+
+		List<TripBooking> savedBooking = tripBookingService.viewAllTripsCustomer(customerId, key);
+		return new ResponseEntity<List<TripBooking>>(savedBooking, HttpStatus.OK);
+
+	}
+
+	@GetMapping("/generateBill/{driverId}/{key}")
+	public ResponseEntity<String> generateBillHandler(@PathVariable("driverId") Integer driverId,
+			@PathVariable String key) throws TripBookingException {
+		String billDetails = tripBookingService.calculateBill(driverId, key);
+		return new ResponseEntity<String>(billDetails, HttpStatus.OK);
 	}
 
 	@PostMapping("/login")

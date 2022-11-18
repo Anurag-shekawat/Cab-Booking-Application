@@ -76,6 +76,7 @@ public class CustomerServiceImpl implements CustomerService {
 				}
 
 				cDao.delete(customer.get());
+				sDao.delete(loggedInUser);
 				return customer.get();
 			} else {
 				throw new CustomerException("No customer exist with customer id: " + customerId);

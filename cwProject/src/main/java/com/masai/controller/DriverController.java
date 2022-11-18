@@ -49,7 +49,7 @@ public class DriverController {
 	}
 
 	@DeleteMapping("/delete/{dId}")
-	public ResponseEntity<CabDriver> deleteCustomerhandler(@PathVariable("dId") Integer driverId,
+	public ResponseEntity<CabDriver> deleteDriverhandler(@PathVariable("dId") Integer driverId,
 			@RequestParam("key") String key) throws DriverException {
 		CabDriver driver = dService.deleteDriver(driverId, key);
 		return new ResponseEntity<CabDriver>(driver, HttpStatus.ACCEPTED);

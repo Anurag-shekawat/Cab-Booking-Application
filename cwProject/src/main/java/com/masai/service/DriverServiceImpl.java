@@ -75,6 +75,7 @@ public class DriverServiceImpl implements DriverService {
 			if (driver.isPresent()) {
 				driver.get().getCab().setCabDriver(null);
 				dDao.delete(driver.get());
+				sDao.delete(loggedInDriver);
 				return driver.get();
 			} else {
 				throw new DriverException("No driver exist with driverId: " + driverId);
