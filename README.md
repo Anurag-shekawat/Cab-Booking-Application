@@ -134,7 +134,7 @@ http://localhost:8888/swagger-ui/
 | `POST` | `Trip List` | `http://localhost:8888/customer/triplist` | Trip List |
 | `POST` | `Generate Bill` | `http://localhost:8888/customer/generateBill` | Generate Bill |
 | `GET`  |  `View All Customer` | `http://localhost:8888/customer/getAll`| View All Customer|
-| `GET`  |  `View Customer` | `http://localhost:8888/customer/getCustomer/{customerId}
+| `GET`  |  `View Customer` | `http://localhost:8888/customer/getCustomer/{customerId}`
 
 
 ## Cab Driver Requests
