@@ -59,7 +59,7 @@ admin who can also login and update their information as well as access the data
 ```
     server.port=8888
 
-    spring.datasource.url=jdbc:mysql://localhost:3306/sb201db;
+    spring.datasource.url=jdbc:mysql://localhost:3306/sb201dbcw;
     spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
     spring.datasource.username=root
     spring.datasource.password=root
@@ -81,24 +81,24 @@ http://localhost:8888/swagger-ui/
 ```
 | Request | METHOD     |  URI | Description                |
 | :-------- | :------- | :----- | :------------------------- |
-| `POST` | `Login` | `http://localhost:8888/loginAdmin` | Login Admin |
-| `GET` | `Logout` | `http://localhost:8888/logoutAdmin` | Logout Admin |
+| `POST` | `Login` | `http://localhost:8888/admin/login` | Login Admin |
+| `GET` | `Logout` | `http://localhost:8888/admin/logout` | Logout Admin |
 
 ```http
    Customer Login
 ```
 | Request | METHOD     |  URI | Description                |
 | :-------- | :------- | :----- | :------------------------- |
-| `POST` | `Login` | `http://localhost:8888/loginCustomer` | Login Customer |
-| `GET` | `Logout` | `http://localhost:8888/logoutCustomer` | Logout Customer |
+| `POST` | `Login` | `http://localhost:8888/customers/login` | Login Customer |
+| `GET` | `Logout` | `http://localhost:8888/customers/logout` | Logout Customer |
 
 ```http
    Driver Login
 ```
 | Request | METHOD     |  URI | Description                |
 | :-------- | :------- | :----- | :------------------------- |
-| `POST` | `Login` | `http://localhost:8888/loginDriver` | Login Driver |
-| `GET` | `Logout` | `http://localhost:8888/logoutDriver` | Logout Driver |
+| `POST` | `Login` | `http://localhost:8888/driver/login` | Login Driver |
+| `GET` | `Logout` | `http://localhost:8888/driver/logout` | Logout Driver |
 
 ## Admin Requests
 
@@ -110,9 +110,13 @@ http://localhost:8888/swagger-ui/
 | :-------- | :------- | :----- | :------------------------- |
 | `POST` | `Create` | `http://localhost:8888/admin/create` | Create Admin |
 | `PUT` | `Update` | `http://localhost:8888/admin/update` | Update Admin |
-| `DELETE` | `Delete` | `http://localhost:8888/admin/delete` | Delete Admin |
-| `POST` | `Get All Trip` | `http://localhost:8888/admin/getalltrips` | Show All Trip |
-| `GET` | `Get Trip By Cab` | `http://localhost:8888/admin/getalltripsbycab/{cabId}` | Get All Trip By Cab ID |
+| `PUT` | `Update Rate Of Cab` | `http://localhost:8888/admin/updateRateOfCab` | Update Rate Of Cab |
+| `DELETE` | `Delete` | `http://localhost:8888/admin/delete/{aId}` | Delete Admin |
+| `POST` | `Get All Trip` | `http://localhost:8888/admin/getAllTrips/{adminId}` | Show All Trip |
+| `GET` | `Get Trip By Cab` | `http://localhost:8888/admin/getAllTripsByCab/{cabId}/{adminId}` | Get All Trip By Cab ID |
+| `GET` | `Get Cab By Car Type` | `http://localhost:8888/admin/getCabByCarType/{carType}` | Get Cab By Car Type |
+| `GET` | `Count All Cabs` | `http://localhost:8888/admin/countCabs/{carType}` | Count All Cabs |
+
 
 ## Customer Requests
 
@@ -124,13 +128,13 @@ http://localhost:8888/swagger-ui/
 | :-------- | :------- | :----- | :------------------------- |
 | `POST` | `Create` | `http://localhost:8888/customer/create` | Create Customer |
 | `PUT` | `Update` | `http://localhost:8888/customer/update` | Update Customer |
-| `DELETE` | `Delete` | `http://localhost:8888/customer/delete` | Delete Customer |
-| `POST` | `Book Trip` | `http://localhost:8888/customer/booktriping` | Book Trip |
+| `DELETE` | `Delete` | `http://localhost:8888/customer/delete/{cId}` | Delete Customer |
+| `POST` | `Book Trip` | `http://localhost:8888/customer/createTrip` | Book Trip |
 | `DELETE` | `Cancel Trip` | `http://localhost:8888/customer/canceltrip` | Cancel Trip |
 | `POST` | `Trip List` | `http://localhost:8888/customer/triplist` | Trip List |
 | `POST` | `Generate Bill` | `http://localhost:8888/customer/generateBill` | Generate Bill |
-| `GET`  |  `View All Customer` | `http://localhost:8888/customer/viewAll`| View All Customer|
-| `GET`  |  `View Customer` | `http://localhost:8888/customer/viewAll`| View Customer|
+| `GET`  |  `View All Customer` | `http://localhost:8888/customer/getAll`| View All Customer|
+| `GET`  |  `View Customer` | `http://localhost:8888/customer/getCustomer/{customerId}
 
 
 ## Cab Driver Requests
@@ -141,7 +145,7 @@ http://localhost:8888/swagger-ui/
 
 | Request | METHOD     |  URI | Description                |
 | :-------- | :------- | :----- | :------------------------- |
-| `POST` | `Create` | `http://localhost:8888/cabdriver/create` | Create Cab Driver |
-| `PUT` | `Update` | `http://localhost:8888/cabdriver/update` | Update Cab Driver |
-| `DELETE` | `Delete` | `http://localhost:8888/cabdriver/delete` | Delete Cab Driver |
-| `POST` | `Book Trip` | `http://localhost:8888/cabdriver/tripcompleted` | Trip Completed |
+| `POST` | `Create` | `http://localhost:8888/driver/create` | Create Cab Driver |
+| `PUT` | `Update` | `http://localhost:8888/driver/update` | Update Cab Driver |
+| `DELETE` | `Delete` | `http://localhost:8888/driver/delete` | Delete Cab Driver |
+| `GET` | `See Best Drivers` | `http://localhost:8888/driver/viewBestDrivers` |View best drivers|
