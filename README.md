@@ -89,8 +89,8 @@ http://localhost:8888/swagger-ui/
 ```
 | Request | METHOD     |  URI | Description                |
 | :-------- | :------- | :----- | :------------------------- |
-| `POST` | `Login` | `http://localhost:8888/customers/login` | Login Customer |
-| `GET` | `Logout` | `http://localhost:8888/customers/logout` | Logout Customer |
+| `POST` | `Login` | `http://localhost:8888/customer/login` | Login Customer |
+| `GET` | `Logout` | `http://localhost:8888/customer/logout` | Logout Customer |
 
 ```http
    Driver Login
