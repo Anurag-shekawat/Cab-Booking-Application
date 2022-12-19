@@ -8,7 +8,7 @@ admin who can also login and update their information as well as access the data
 
 # Collaborators
 
--[Anurag Shekhawat](https://github.com/Anurag-shekawat)
+- [Anurag Shekhawat](https://github.com/Anurag-shekawat)
 - [Aman Sharma](https://github.com/Aman103767)
 - [Rohit Kumar](https://github.com/RohitJsr)
 - [Akash Kumar](https://github.com/akashkumar124)
