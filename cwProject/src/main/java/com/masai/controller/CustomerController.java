@@ -29,7 +29,7 @@ import com.masai.service.LoginService;
 import com.masai.service.TripBookingService;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/customer")
 public class CustomerController {
 
 	@Autowired
